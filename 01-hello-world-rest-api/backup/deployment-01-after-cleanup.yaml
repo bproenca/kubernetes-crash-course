@@ -6,7 +6,7 @@ metadata:
   name: hello-world-rest-api
   namespace: default
 spec:
-  replicas: 3
+  replicas: 2
   selector:
     matchLabels:
       app: hello-world-rest-api
@@ -21,7 +21,7 @@ spec:
         app: hello-world-rest-api
     spec:
       containers:
-      - image: bproenca/hello-world-rest-api:0.0.5-SNAPSHOT
+      - image: in28min/hello-world-rest-api:0.0.2.RELEASE
         imagePullPolicy: IfNotPresent
         name: hello-world-rest-api
       restartPolicy: Always
@@ -36,7 +36,7 @@ metadata:
   namespace: default
 spec:
   ports:
-  - nodePort: 32530
+  - nodePort: 30702
     port: 8080
     protocol: TCP
     targetPort: 8080
