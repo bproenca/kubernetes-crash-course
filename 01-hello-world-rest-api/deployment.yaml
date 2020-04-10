@@ -7,6 +7,7 @@ metadata:
   namespace: default
 spec:
   replicas: 3
+  minReadySeconds: 45
   selector:
     matchLabels:
       app: hello-world-rest-api
