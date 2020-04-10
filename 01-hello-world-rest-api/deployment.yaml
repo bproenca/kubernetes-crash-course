@@ -3,14 +3,16 @@ kind: Deployment
 metadata:
   labels:
     app: hello-world-rest-api
-  name: hello-world-rest-api
+    version: v4
+  name: hello-world-rest-api-v4
   namespace: default
 spec:
-  replicas: 3
+  replicas: 2
   minReadySeconds: 45
   selector:
     matchLabels:
       app: hello-world-rest-api
+      version: v4
   strategy:
     rollingUpdate:
       maxSurge: 25%
@@ -20,10 +22,44 @@ spec:
     metadata:
       labels:
         app: hello-world-rest-api
+        version: v4
+    spec:
+      containers:
+      - image: bproenca/hello-world-rest-api:0.0.4-SNAPSHOT
+        imagePullPolicy: Always
+        name: hello-world-rest-api
+      restartPolicy: Always
+      terminationGracePeriodSeconds: 30
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  labels:
+    app: hello-world-rest-api
+    version: v5
+  name: hello-world-rest-api-v5
+  namespace: default
+spec:
+  replicas: 2
+  minReadySeconds: 45
+  selector:
+    matchLabels:
+      app: hello-world-rest-api
+      version: v5
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app: hello-world-rest-api
+        version: v5
     spec:
       containers:
       - image: bproenca/hello-world-rest-api:0.0.5-SNAPSHOT
-        imagePullPolicy: IfNotPresent
+        imagePullPolicy: Always
         name: hello-world-rest-api
       restartPolicy: Always
       terminationGracePeriodSeconds: 30
@@ -31,7 +67,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  labels:
+  labels: # pods
     app: hello-world-rest-api
   name: hello-world-rest-api
   namespace: default
@@ -41,7 +77,8 @@ spec:
     port: 8080
     protocol: TCP
     targetPort: 8080
-  selector:
+  selector: # (look for pods with this "app", doen't care about version)
     app: hello-world-rest-api
+    version: v5
   sessionAffinity: None
   type: LoadBalancer
