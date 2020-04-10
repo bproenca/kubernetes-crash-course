@@ -1,11 +1,11 @@
-package com.in28minutes.rest.webservices.restfulwebservices;
+package br.com.bcp.webservices.restfulwebservices;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.in28minutes.rest.webservices.restfulwebservices.environment.InstanceInformationService;
+import br.com.bcp.webservices.restfulwebservices.environment.InstanceInformationService;
 
 @RestController
 public class HelloWorldController {
@@ -21,7 +21,7 @@ public class HelloWorldController {
 	
 	@GetMapping(path = "/hello-world")
 	public String helloWorld() {
-		return "Hello World " + " V3 " + service.retrieveInstanceInfo();
+		return "Hello World " + " V5 " + service.retrieveInstanceInfo();
 	}
 
 	@GetMapping(path = "/hello-world-bean")
