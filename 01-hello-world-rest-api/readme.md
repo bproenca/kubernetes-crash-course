@@ -1,23 +1,32 @@
 # Hello World Rest API
 
-### Running the Application
+### Build and Publish image
 
-Run com.in28minutes.rest.webservices.restfulwebservices.RestfulWebServicesApplication as a Java Application.
+```console
+mvn clean package
+docker push bproenca/hello-world-rest-api:0.0.5-SNAPSHOT
+```
 
-- http://localhost:8080/hello-world
+### Deploy GCP
+```console
+gcloud auth login
+gcloud container clusters resize --zone us-central1-a cluster-bcp --num-nodes=3
+
+kubectl apply -f deployment.yaml
+```
+
+### Accessing the Application
+
+- http://\<load-balancer-ip\>:8080/hello-world
 
 ```txt
-Hello World V1 abcde
+Hello World V5 abcde
+
+watch -n 0.1 curl http://35.193.33.62:8080/hello-world
 ```
 
-- http://localhost:8080/hello-world-bean
-
-```json
-{"message":"Hello World"}
-```
-
-- http://localhost:8080/hello-world/path-variable/in28minutes
-
-```json
-{"message":"Hello World, in28minutes"}
+### Undeploy GCP
+```console
+kubectl delete all -l app=hello-world-rest-api
+gcloud container clusters resize --zone us-central1-a cluster-bcp --num-nodes=0
 ```
