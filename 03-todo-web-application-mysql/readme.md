@@ -1,3 +1,32 @@
+# Deploy
+
+Goto ./k8s folder: 
+
+* (opt) Start nodes
+	```
+	gcloud container clusters resize --zone us-central1-a cluster-bcp --num-nodes=3  
+	```
+* (opt) Delete previous deploy:
+	```
+	kubectl delete all -l io.kompose.service=todo-web-application
+	kubectl delete all -l io.kompose.service: mysql
+	```
+* **Start deploy**:
+	```
+	kubectl apply -f config-map.yaml,secret.yaml,mysql-database-data-volume-persistentvolumeclaim.yaml,mysql-deployment.yaml,mysql-service.yaml,todo-web-application-deployment.yaml,todo-web-application-service.yaml
+	```
+* Undeploy
+	```
+	kubectl delete -f config-map.yaml,secret.yaml,mysql-database-data-volume-persistentvolumeclaim.yaml,mysql-deployment.yaml,mysql-service.yaml,todo-web-application-deployment.yaml,todo-web-application-service.yaml
+	```
+* (opt) Stop nodes
+	```
+	gcloud container clusters resize --zone us-central1-a cluster-bcp --num-nodes=0
+	```
+
+
+
+
 # Todo Web Application using Spring Boot and MySQL as Database
 
 Run com.in28minutes.springboot.web.SpringBootFirstWebApplication as a Java Application.
