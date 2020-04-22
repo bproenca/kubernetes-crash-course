@@ -1,3 +1,31 @@
+* (opt) Build and Publish Image
+	```
+	mvn clean install
+	docker push bproenca/todo-web-application-mysql:0.0.1-SNAPSHOT 
+	```
+* (opt) Start nodes
+	```
+	gcloud container clusters resize --zone us-central1-a cluster-bcp --num-nodes=3  
+	```
+* (opt) Delete previous deploy:
+	```
+	kubectl delete all -l io.kompose.service=todo-web-application
+	kubectl delete all -l io.kompose.service: mysql
+	```
+* **Start deploy**:
+	```
+	kubectl apply -f config-map.yaml,secret.yaml,mysql-database-data-volume-persistentvolumeclaim.yaml,mysql-deployment.yaml,mysql-service.yaml,todo-web-application-deployment.yaml,todo-web-application-service.yaml
+	```
+* Undeploy
+	```
+	kubectl delete -f config-map.yaml,secret.yaml,mysql-database-data-volume-persistentvolumeclaim.yaml,mysql-deployment.yaml,mysql-service.yaml,todo-web-application-deployment.yaml,todo-web-application-service.yaml
+	```
+* (opt) Stop nodes
+	```
+	gcloud container clusters resize --zone us-central1-a cluster-bcp --num-nodes=0
+	```
+
+
 # Currency Exchange Micro Service - H2
 
 Run com.in28minutes.microservices.currencyconversionservice.CurrencyConversionServiceApplicationH2 as a Java Application.
@@ -53,7 +81,7 @@ create table exchange_value
 
 #### Basic
 ```
-docker container run --publish 8000:8000 in28min/currency-exchange:0.0.1-SNAPSHOT
+docker container run --publish 8000:8000 bproenca/currency-exchange:0.0.1-SNAPSHOT
 ```
 
 

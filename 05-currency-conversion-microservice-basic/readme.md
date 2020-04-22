@@ -1,3 +1,31 @@
+* (opt) Build and Publish Image
+	```
+	mvn clean package
+	docker push bproenca/todo-web-application-mysql:0.0.1-SNAPSHOT 
+	```
+* (opt) Start nodes
+	```
+	gcloud container clusters resize --zone us-central1-a cluster-bcp --num-nodes=3  
+	```
+* (opt) Delete previous deploy:
+	```
+	kubectl delete all -l io.kompose.service=todo-web-application
+	kubectl delete all -l io.kompose.service: mysql
+	```
+* **Start deploy**:
+	```
+	kubectl apply -f config-map.yaml,secret.yaml,mysql-database-data-volume-persistentvolumeclaim.yaml,mysql-deployment.yaml,mysql-service.yaml,todo-web-application-deployment.yaml,todo-web-application-service.yaml
+	```
+* Undeploy
+	```
+	kubectl delete -f config-map.yaml,secret.yaml,mysql-database-data-volume-persistentvolumeclaim.yaml,mysql-deployment.yaml,mysql-service.yaml,todo-web-application-deployment.yaml,todo-web-application-service.yaml
+	```
+* (opt) Stop nodes
+	```
+	gcloud container clusters resize --zone us-central1-a cluster-bcp --num-nodes=0
+	```
+
+
 # Currency Conversion Micro Service
 Run com.in28minutes.microservices.currencyconversionservice.CurrencyConversionServiceApplication as a Java Application.
 
@@ -32,7 +60,7 @@ totalCalculatedAmount: 750
 ### Running Containers
 
 ```
-docker run --publish 8100:8100 --network currency-network --env CURRENCY_EXCHANGE_URI=http://currency-exchange:8000 in28min/currency-conversion:0.0.1-SNAPSHOT
+docker run --publish 8100:8100 --network currency-network --env CURRENCY_EXCHANGE_URI=http://currency-exchange:8000 bproenca/currency-conversion:0.0.1-SNAPSHOT
 ```
 
 #### Test API 

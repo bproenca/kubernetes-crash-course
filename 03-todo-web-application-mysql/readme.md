@@ -2,6 +2,11 @@
 
 Goto ./k8s folder: 
 
+* (opt) Build and Publish Image
+	```
+	mvn clean package
+	docker push bproenca/todo-web-application-mysql:0.0.1-SNAPSHOT 
+	```
 * (opt) Start nodes
 	```
 	gcloud container clusters resize --zone us-central1-a cluster-bcp --num-nodes=3  

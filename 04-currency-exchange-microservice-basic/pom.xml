@@ -8,7 +8,7 @@
 	<artifactId>04-currency-exchange-basic</artifactId>
 	<version>0.0.1-RELEASE</version> <!-- CHANGE -->
 	<packaging>jar</packaging>
-	<name>currency-exchange</name>
+	<name>currency-exchange-k8s</name>
 
 	<description>Demo project for Spring Boot</description>
 
@@ -127,7 +127,7 @@
 					</execution>
 				</executions>
 				<configuration>
-					<repository>in28min/${project.name}</repository>
+					<repository>bproenca/${project.name}</repository>
 					<tag>${project.version}</tag>
 					<skipDockerInfo>true</skipDockerInfo>
 				</configuration>

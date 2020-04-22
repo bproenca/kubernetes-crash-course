@@ -8,7 +8,7 @@
 	<artifactId>05-currency-conversion-basic</artifactId>
 	<version>0.0.2-RELEASE</version> <!-- CHANGE -->
 	<packaging>jar</packaging>
-	<name>currency-conversion</name>
+	<name>currency-conversion-k8s</name>
 
 	<description>Demo project for Spring Boot</description>
 
@@ -136,7 +136,7 @@
 					</execution>
 				</executions>
 				<configuration>
-					<repository>in28min/${project.name}</repository>
+					<repository>bproenca/${project.name}</repository>
 					<tag>${project.version}</tag>
 					<skipDockerInfo>true</skipDockerInfo>
 				</configuration>
