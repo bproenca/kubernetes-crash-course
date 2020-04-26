@@ -1,7 +1,8 @@
-* (opt) Build and Publish Image
+* (opt) Build and Publish Image (04 and 05 projects)
 	```
 	mvn clean package
-	docker push bproenca/todo-web-application-mysql:0.0.1-SNAPSHOT 
+	docker push bproenca/currency-exchange-k8s:0.0.3-RELEASE
+	docker push bproenca/currency-conversion-k8s:0.0.3-RELEASE
 	```
 * (opt) Start nodes
 	```
@@ -9,16 +10,18 @@
 	```
 * (opt) Delete previous deploy:
 	```
-	kubectl delete all -l io.kompose.service=todo-web-application
-	kubectl delete all -l io.kompose.service: mysql
+	kubectl delete -f ../05-currency-conversion-microservice-basic/deployment-all.yaml
+
+	kubectl get ingress
+	kubectl get all
 	```
-* **Start deploy**:
+* **Start deploy** (project 05):
 	```
-	kubectl apply -f config-map.yaml,secret.yaml,mysql-database-data-volume-persistentvolumeclaim.yaml,mysql-deployment.yaml,mysql-service.yaml,todo-web-application-deployment.yaml,todo-web-application-service.yaml
+	kubectl apply -f deployment-all.yaml
 	```
 * Undeploy
 	```
-	kubectl delete -f config-map.yaml,secret.yaml,mysql-database-data-volume-persistentvolumeclaim.yaml,mysql-deployment.yaml,mysql-service.yaml,todo-web-application-deployment.yaml,todo-web-application-service.yaml
+	kubectl delete -f deployment-all.yaml
 	```
 * (opt) Stop nodes
 	```
